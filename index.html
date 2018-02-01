@@ -22,18 +22,8 @@
 			}
 		</style>
 		<script>
-		/*var striOri = 
-		"
-		var retorno = convertParamsStringToVetor(striOri);
-		
-		var striOri = 
-		
-		retorno.forEach(function(each){
-			stri = stri.replace(new RegExp(each[0], 'g'),each[1]) 
-		});
-		console.log(stri);*/
-		
-		function teste(){
+			
+		function convert(){
 			var striOri = document.getElementById("param").value;
 			var retorno = convertParamsStringToVetor(striOri);
 			var striSql = document.getElementById("sql").value;
@@ -47,7 +37,6 @@
 		
 		function convertParamsStringToVetor(striOri){
 			var striNovo = striOri.replace(/\n/g, '');
-			striNovo = striOri.replace(/ /g, '');
 			striNovo = striNovo.replace(/{/g, '');
 			striNovo= striNovo.replace(/}/g, '');
 			console.log(striNovo);
@@ -55,6 +44,7 @@
 			var b = [];
 			v.forEach(function(entry) {
 				var t = entry.split('=');
+				t[0] = t[0].replace(/ /g, '');
 				t[0] = funcOrganizaChave(t[0]);
 				t[1] = funcOrganizaValor(t[1]);
 				b.push(t);
@@ -89,7 +79,7 @@
 		<div class="myDiv" id="resultDiv">
 		Resultado:</br>
 		<textarea  id="result" class="fill" type="text" rows="6" cols="50" > </textarea> </br>
-		<input type="button" value="Inserir parametros" onclick="teste()">
+		<input type="button" value="Inserir parametros" onclick="convert()">
 		</div>
 		
 		<script>
