@@ -1,0 +1,100 @@
+<html>
+	<head>
+		<title>Pass params into sql</title>
+		<style>
+			body{
+				width:100%
+				height:100%
+			}
+			.myDiv{
+				width: 40%;
+				align: center;
+				float: left;
+				padding: 10px;
+				margin-right: 10px;
+				position: sticky;
+			}
+			.fill{
+				width:100%;
+			}
+			.fill-half{
+				width:50%;
+			}
+		</style>
+		<script>
+		/*var striOri = 
+		"
+		var retorno = convertParamsStringToVetor(striOri);
+		
+		var striOri = 
+		
+		retorno.forEach(function(each){
+			stri = stri.replace(new RegExp(each[0], 'g'),each[1]) 
+		});
+		console.log(stri);*/
+		
+		function teste(){
+			var striOri = document.getElementById("param").value;
+			var retorno = convertParamsStringToVetor(striOri);
+			var striSql = document.getElementById("sql").value;
+			var stri = striSql;
+			retorno.forEach(function(each){
+				stri = stri.replace(new RegExp(each[0], 'g'),each[1]) 
+			});
+			document.getElementById("result").value = stri;
+			console.log(stri);
+		}
+		
+		function convertParamsStringToVetor(striOri){
+			var striNovo = striOri.replace(/\n/g, '');
+			striNovo = striOri.replace(/ /g, '');
+			striNovo = striNovo.replace(/{/g, '');
+			striNovo= striNovo.replace(/}/g, '');
+			console.log(striNovo);
+			var v = striNovo.split(',');
+			var b = [];
+			v.forEach(function(entry) {
+				var t = entry.split('=');
+				t[0] = funcOrganizaChave(t[0]);
+				t[1] = funcOrganizaValor(t[1]);
+				b.push(t);
+			});
+			return b;
+		}
+		
+		function funcOrganizaChave(texto){
+			return "\:".concat(texto);
+		}
+		
+		function funcOrganizaValor(texto){
+			if(texto != "null")
+				return "\'".concat(texto,"\'");
+			else
+				return texto;
+		}
+		
+		</script>
+	</head>
+	<body>
+		<div class="myDiv">
+		Sql:
+		<textarea  id="sql" class="fill" type="text" rows="6" cols="50" ></textarea>
+		</div>
+
+		<div class="myDiv">
+		Parametros:
+		<textarea  id="param" class="fill" type="text" rows="6" cols="50" > </textarea>
+		</div>
+
+		<div class="myDiv" id="resultDiv">
+		Resultado:</br>
+		<textarea  id="result" class="fill" type="text" rows="6" cols="50" > </textarea> </br>
+		<input type="button" value="Inserir parametros" onclick="teste()">
+		</div>
+		
+		<script>
+		//document.getElementById("param").value = "{sitMatriculado=Matriculado, passaporte=null, sitTrancado=Trancado, sitAprovado=Aprovado, nomeCompletoPessoa=null, codUnidadeEnsino=300, sitInconcluido=Inconcluido, codAluno=null, sitDispensado=Dispensado, sitRepNota=Rep Nota, codUnidadeFisica=104, cpf=null, sitRepFreq=Rep Freq}"
+		//document.getElementById("sql").value = "SELECT DISTINCT T.* FROM (SELECT DISTINCT a.ALUNO AS codAluno, a.PESSOA AS codPessoa, a.TURMA_PREF AS turmaPreferencial, a.CURSO AS codCurso, a.TURNO AS codTurno, a.CURRICULO AS codCurriculo, a.SERIE AS codSerie, a.ANO_INGRESSO AS anoIngresso, a.SEM_INGRESSO AS semestreIngresso, a.TIPO_INGRESSO AS codTipoIngresso, a.ANOCONCL_2G AS anoConclusao2Grau, a.UNIDADE_ENSINO AS unidadeEns, a.UNIDADE_FISICA AS unidadeFisica, a.TIPO_ALUNO AS tipoAluno, a.E_MAIL_INTERNO AS EMailInterno, a.DT_INGRESSO AS dataIngresso, a.SIT_ALUNO AS sit_aluno, p.NOME_COMPL AS nomeCompletoPessoa, p.CPF AS cpf, p.PASSAPORTE AS passaporte, p.CELULAR AS celular, p.FONE AS telefone, p.SENHA_TAC AS senha_tac, p.E_MAIL AS emailExterno, ffa.FL_FIELD_01 FL_FIELD_01, ffa.FL_FIELD_02 FL_FIELD_02, ffa.FL_FIELD_03 FL_FIELD_03, ffa.FL_FIELD_04 FL_FIELD_04, ffa.FL_FIELD_05 FL_FIELD_05, ffa.FL_FIELD_06 FL_FIELD_06, ffa.FL_FIELD_07 FL_FIELD_07, ffa.FL_FIELD_08 FL_FIELD_08, ffa.FL_FIELD_09 FL_FIELD_09, ffa.FL_FIELD_10 FL_FIELD_10, ffa.FL_FIELD_11 FL_FIELD_11, ffa.FL_FIELD_12 FL_FIELD_12, ffa.FL_FIELD_13 FL_FIELD_13, ffa.FL_FIELD_14 FL_FIELD_14, ffa.FL_FIELD_15 FL_FIELD_15, ffa.FL_FIELD_16 FL_FIELD_16, ffa.FL_FIELD_17 FL_FIELD_17, ffa.FL_FIELD_18 FL_FIELD_18, ffa.FL_FIELD_19 FL_FIELD_19, ffa.FL_FIELD_20 FL_FIELD_20, ffa.FL_FIELD_21 FL_FIELD_21, ffa.FL_FIELD_22 FL_FIELD_22, ffa.FL_FIELD_23 FL_FIELD_23, ffa.FL_FIELD_24 FL_FIELD_24, ffa.FL_FIELD_25 FL_FIELD_25, ffa.FL_FIELD_26 FL_FIELD_26, ffa.FL_FIELD_27 FL_FIELD_27, ffa.FL_FIELD_28 FL_FIELD_28, ffa.FL_FIELD_29 FL_FIELD_29, ffa.FL_FIELD_30 FL_FIELD_30, ffa.FL_FIELD_31 FL_FIELD_31, ffa.FL_FIELD_32 FL_FIELD_32, ffa.FL_FIELD_33 FL_FIELD_33, ffa.FL_FIELD_34 FL_FIELD_34, ffa.FL_FIELD_35 FL_FIELD_35, ffa.FL_FIELD_36 FL_FIELD_36, ffa.FL_FIELD_37 FL_FIELD_37, ffa.FL_FIELD_38 FL_FIELD_38, ffa.FL_FIELD_39 FL_FIELD_39, ffa.FL_FIELD_40 FL_FIELD_40 FROM LY_ALUNO a LEFT JOIN LY_PESSOA p ON p.PESSOA = a.PESSOA LEFT JOIN LY_FL_ALUNO ffa ON ffa.aluno = a.aluno INNER JOIN LY_CURSO Curso ON Curso.curso = a.curso INNER JOIN ly_matricula m ON m.aluno = a.aluno INNER JOIN ly_turma t ON t.disciplina = m.disciplina AND t.turma = m.turma AND t.ano = m.ano AND t.semestre = m.semestre WHERE m.sit_matricula IN (:sitMatriculado, :sitDispensado, :sitRepNota, :sitRepFreq, :sitAprovado, :sitTrancado, :sitInconcluido) AND (((:codAluno IS NOT NULL) AND (a.ALUNO LIKE :codAluno)) OR (:codAluno IS NULL)) AND (((:nomeCompletoPessoa IS NOT NULL) AND (p.NOME_COMPL LIKE :nomeCompletoPessoa)) OR (:nomeCompletoPessoa IS NULL)) AND (((:cpf IS NOT NULL) AND (p.CPF = :cpf)) OR (:cpf IS NULL)) AND (((:codUnidadeEnsino IS NOT NULL) AND (t.UNIDADE_RESPONSAVEL = :codUnidadeEnsino)) OR (:codUnidadeEnsino IS NULL)) AND (((:passaporte IS NOT NULL) AND (p.PASSAPORTE = :passaporte)) OR (:passaporte IS NULL)) UNION SELECT DISTINCT a.ALUNO AS codAluno, a.PESSOA AS codPessoa, a.TURMA_PREF AS turmaPreferencial, a.CURSO AS codCurso, a.TURNO AS codTurno, a.CURRICULO AS codCurriculo, a.SERIE AS codSerie, a.ANO_INGRESSO AS anoIngresso, a.SEM_INGRESSO AS semestreIngresso, a.TIPO_INGRESSO AS codTipoIngresso, a.ANOCONCL_2G AS anoConclusao2Grau, a.UNIDADE_ENSINO AS unidadeEns, a.UNIDADE_FISICA AS unidadeFisica, a.TIPO_ALUNO AS tipoAluno, a.E_MAIL_INTERNO AS EMailInterno, a.DT_INGRESSO AS dataIngresso, a.SIT_ALUNO AS sit_aluno, p.NOME_COMPL AS nomeCompletoPessoa, p.CPF AS cpf, p.PASSAPORTE AS passaporte, p.CELULAR AS celular, p.FONE AS telefone, p.SENHA_TAC AS senha_tac, p.E_MAIL AS emailExterno, ffa.FL_FIELD_01 FL_FIELD_01, ffa.FL_FIELD_02 FL_FIELD_02, ffa.FL_FIELD_03 FL_FIELD_03, ffa.FL_FIELD_04 FL_FIELD_04, ffa.FL_FIELD_05 FL_FIELD_05, ffa.FL_FIELD_06 FL_FIELD_06, ffa.FL_FIELD_07 FL_FIELD_07, ffa.FL_FIELD_08 FL_FIELD_08, ffa.FL_FIELD_09 FL_FIELD_09, ffa.FL_FIELD_10 FL_FIELD_10, ffa.FL_FIELD_11 FL_FIELD_11, ffa.FL_FIELD_12 FL_FIELD_12, ffa.FL_FIELD_13 FL_FIELD_13, ffa.FL_FIELD_14 FL_FIELD_14, ffa.FL_FIELD_15 FL_FIELD_15, ffa.FL_FIELD_16 FL_FIELD_16, ffa.FL_FIELD_17 FL_FIELD_17, ffa.FL_FIELD_18 FL_FIELD_18, ffa.FL_FIELD_19 FL_FIELD_19, ffa.FL_FIELD_20 FL_FIELD_20, ffa.FL_FIELD_21 FL_FIELD_21, ffa.FL_FIELD_22 FL_FIELD_22, ffa.FL_FIELD_23 FL_FIELD_23, ffa.FL_FIELD_24 FL_FIELD_24, ffa.FL_FIELD_25 FL_FIELD_25, ffa.FL_FIELD_26 FL_FIELD_26, ffa.FL_FIELD_27 FL_FIELD_27, ffa.FL_FIELD_28 FL_FIELD_28, ffa.FL_FIELD_29 FL_FIELD_29, ffa.FL_FIELD_30 FL_FIELD_30, ffa.FL_FIELD_31 FL_FIELD_31, ffa.FL_FIELD_32 FL_FIELD_32, ffa.FL_FIELD_33 FL_FIELD_33, ffa.FL_FIELD_34 FL_FIELD_34, ffa.FL_FIELD_35 FL_FIELD_35, ffa.FL_FIELD_36 FL_FIELD_36, ffa.FL_FIELD_37 FL_FIELD_37, ffa.FL_FIELD_38 FL_FIELD_38, ffa.FL_FIELD_39 FL_FIELD_39, ffa.FL_FIELD_40 FL_FIELD_40 FROM LY_ALUNO a LEFT JOIN LY_PESSOA p ON p.PESSOA = a.PESSOA LEFT JOIN LY_FL_ALUNO ffa ON ffa.aluno = a.aluno INNER JOIN LY_CURSO Curso ON Curso.curso = a.curso INNER JOIN ly_histmatricula m ON m.aluno = a.aluno INNER JOIN ly_turma t ON t.disciplina = m.disciplina AND t.turma = m.turma AND t.ano = m.ano AND t.semestre = m.semestre WHERE m.situacao_hist IN (:sitRepNota, :sitRepFreq, :sitAprovado, :sitTrancado) AND (((:codAluno IS NOT NULL) AND (a.ALUNO LIKE :codAluno)) OR (:codAluno IS NULL)) AND (((:nomeCompletoPessoa IS NOT NULL) AND (p.NOME_COMPL LIKE :nomeCompletoPessoa)) OR (:nomeCompletoPessoa IS NULL)) AND (((:cpf IS NOT NULL) AND (p.CPF = :cpf)) OR (:cpf IS NULL)) AND (((:codUnidadeEnsino IS NOT NULL) AND (t.UNIDADE_RESPONSAVEL = :codUnidadeEnsino)) OR (:codUnidadeEnsino IS NULL)) AND (((:codUnidadeFisica IS NOT NULL) AND (t.FACULDADE = :codUnidadeFisica)) OR (:codUnidadeFisica IS NULL)) AND (((:passaporte IS NOT NULL) AND (p.PASSAPORTE = :passaporte)) OR (:passaporte IS NULL))) AS T"
+		</script>
+	</body>
+</html>
