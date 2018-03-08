@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>Pass params into sql</title>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
 		<style>
 			body{
 				width:100%
@@ -22,7 +23,13 @@
 			}
 		</style>
 		<script>
-			
+
+		function onReturn(data) { 
+			$('#result').text(data['result']); 
+			console.log(stri);
+		}
+
+
 		function convert(){
 			var striOri = document.getElementById("param").value;
 			var retorno = convertParamsStringToVetor(striOri);
@@ -31,8 +38,15 @@
 			retorno.forEach(function(each){
 				stri = stri.replace(new RegExp(each[0], 'g'),each[1]) 
 			});
-			document.getElementById("result").value = stri;
-			console.log(stri);
+			
+			$.ajax({
+		        url: 'http://sqlformat.org/api/v1/format',
+		        type: 'POST',
+		        dataType: 'json',
+		        crossDomain: true,
+		        data: {sql: stri, reindent: 1},
+		        success: onReturn,
+		    });
 		}
 		
 		function convertParamsStringToVetor(striOri){
