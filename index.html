@@ -34,7 +34,7 @@
 			var paramsString = "{";
 			var params = document.getElementById("param").value
 			var inic = params.split("{")[0]
-			if(inic == "DataMap " || inic == "DataMap" inic == " DataMap "){
+			if(inic == "DataMap " || inic == "DataMap" || inic == " DataMap "){
 				var body = params.split("{")[1]
 				var lines = body.split("\n");
 				var line = "";
