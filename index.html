@@ -33,9 +33,9 @@
 		function formatFromDataMap(){
 			var paramsString = "{";
 			var params = document.getElementById("param").value
-			var inic = v.split("{")[0]
+			var inic = params.split("{")[0]
 			if(inic == "DataMap "){
-				var body = v.split("{")[1]
+				var body = params.split("{")[1]
 				var lines = body.split("\n");
 				var line = "";
 				for (var i = 0; i<lines.length;line = lines[i++]){
@@ -56,7 +56,7 @@
 				paramsString+="}"
 				if(paramsString != "{}"){
 					 document.getElementById("param").value = paramsString
-					console.log(paramsString)
+					 console.log(paramsString)
 				}
 			}
 		}
