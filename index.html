@@ -30,7 +30,38 @@
 		}
 
 
+		function formatFromDataMap(){
+			var paramsString = "{";
+			var params = document.getElementById("param").value
+			var inic = v.split("{")[0]
+			if(inic == "DataMap "){
+				var body = v.split("{")[1]
+				var lines = body.split("\n");
+				var line = "";
+				for (var i = 0; i<lines.length;line = lines[i++]){
+					if(line != null && line != "" ){
+						var pair =  line.split(":")
+						var key = line.split(":",1)[0]
+						var value = line.split(key)[1].split(": ")[1]
+						key = key.split("- ")[1]
+						var lastIndex = key.lastIndexOf(' (')
+						key = key.split(" (",lastIndex)[0]
+						console.log(key+"-"+value)
+						paramsString += key + "=" + value
+						if(i+1<lines.length){
+							paramsString += ","
+						}
+					}
+				}
+				paramsString+="}"
+				if(paramsString != "{}"){
+					 document.getElementById("param").value = paramsString
+					console.log(paramsString)
+				}
+			}
+		}
 		function convert(){
+			formatFromDataMap();
 			var striOri = document.getElementById("param").value;
 			var retorno = convertParamsStringToVetor(striOri);
 			var striSql = document.getElementById("sql").value;
